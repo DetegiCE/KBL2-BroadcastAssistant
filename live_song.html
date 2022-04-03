@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Song List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="margin: 0">
+<div id="container">
+    <div id="title">
+        <p id="bsck">한국 비트세이버 커뮤니티</p>
+        <p id="gametitle">제 2회 <span style="color: #FFC6ED">전자칼잽이</span> 대전</p>
+        <p id="settitle"><span id="Goon">1</span>군 <span id="Gang">8</span>강전 <span id="Joe">A</span>조 맵 풀</p>
+    </div>
+    <div id="songlist">
+        <div id="line1" class="lines">
+            <div id="song1" class="songs">
+                <span id="code1" class="code">12345</span><br>
+                <span id="title1" class="title">WOW</span><br>
+                <span id="mapper1" class="mapper">by SuiSensei</span>
+            </div>
+            <div id="song2" class="songs">
+                <span id="code2" class="code">12345</span><br>
+                <span id="title2" class="title">WOW</span><br>
+                <span id="mapper2" class="mapper">by SuiSensei</span>
+            </div>
+        </div>
+        <div id="line2" class="lines">
+            <div id="song3" class="songs">
+                <span id="code3" class="code">12345</span><br>
+                <span id="title3" class="title">WOW</span><br>
+                <span id="mapper3" class="mapper">by SuiSensei</span>
+            </div>
+            <div id="song4" class="songs">
+                <span id="code4" class="code">12345</span><br>
+                <span id="title4" class="title">WOW</span><br>
+                <span id="mapper4" class="mapper">by SuiSensei</span>
+            </div>
+            <div id="song5" class="songs">
+                <span id="code5" class="code">12345</span><br>
+                <span id="title5" class="title">WOW</span><br>
+                <span id="mapper5" class="mapper">by SuiSensei</span>
+            </div>
+        </div>
+        <div id="line3" class="lines">
+            <div id="song6" class="songs">
+                <span id="code6" class="code">12345</span><br>
+                <span id="title6" class="title">WOW</span><br>
+                <span id="mapper6" class="mapper">by SuiSensei</span>
+            </div>
+            <div id="song7" class="songs">
+                <span id="code7" class="code">12345</span><br>
+                <span id="title7" class="title">WOW</span><br>
+                <span id="mapper7" class="mapper">by SuiSensei</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var map1 = ['23354', '1e2e8', '20157', '184c3', '11208', 'ce66', '9064'];
+    var map2 = ['22dd9', '12377', '1d0df', 'dae6', '15d15', '1d865', '1d3e3'];
+    var map3 = ['d771', '1b891', '1fe6d', '16abf', '1d62f', '1c91c', '1acb3'];
+
+    var title1 = ['Ringed Genesis', 'Destructive Little...', 'Blackmagik Blazing',
+    'THE FOOL', 'Bass Bomb', 'PaIII.SENSATION', 'Miracle Paint'];
+    var title2 = ['팬서비스(Fansa)', 'Sangatsu no...', 'Transcend',
+    'Dynamite', 'Lose Control', 'God-ish-', 'BIG SHOT']
+    var title3 = ['LIKEY', 'Goodbye Declaration', 'Salamandar',
+    'The Nights', 'Shaku (2012)', 'Redo', 'Punish']
+
+    var goon = document.getElementById("Goon");
+    var gang = document.getElementById("Gang");
+    var joe = document.getElementById("Joe");
+
+    var sock = new WebSocket("ws://127.0.0.1:2589");
+    sock.onopen = function(event) {
+        setTimeout(function() {
+            sock.send("Ping!");
+        }, 1000)
+    };
+
+    sock.onmessage = function(event) {
+        console.log(event.data);
+        if(event.data !== "Ping!") {
+            let state = JSON.parse(event.data);
+            goon.innerHTML = state.goon;
+            gang.innerHTML = state.gang;
+            joe.innerHTML = state.joe;
+
+            for(var i=1 ; i<=7 ; i+=1) {
+                var esong = document.getElementById('song'+i);
+                if(state.goon === '1') esong.style.backgroundImage = "url('./DBSD/songs/"+map1[i-1]+"/cover.jpg'), url('./DBSD/songs/"+map1[i-1]+"/cover.png')";
+                if(state.goon === '2') esong.style.backgroundImage = "url('./DBSD/songs/"+map2[i-1]+"/cover.jpg'), url('./DBSD/songs/"+map2[i-1]+"/cover.png')";
+                if(state.goon === '3') esong.style.backgroundImage = "url('./DBSD/songs/"+map3[i-1]+"/cover.jpg'), url('./DBSD/songs/"+map3[i-1]+"/cover.png')";
+                esong.style.backgroundPosition = 'center';
+                esong.style.backgroundSize = 'cover';
+            }
+
+            for(var i=1 ; i<=7 ; i++) {
+                var esong = document.getElementById('code' + i);
+                if (state.goon === '1') esong.innerHTML = map1[i - 1];
+                if (state.goon === '2') esong.innerHTML = map2[i - 1];
+                if (state.goon === '3') esong.innerHTML = map3[i - 1];
+            }
+
+            for(var i=1 ; i<=7 ; i++) {
+                var esong = document.getElementById('title' + i);
+                if (state.goon === '1') esong.innerHTML = title1[i - 1];
+                if (state.goon === '2') esong.innerHTML = title2[i - 1];
+                if (state.goon === '3') esong.innerHTML = title3[i - 1];
+            }
+
+            var ban1 = document.getElementById('song'+state.banpick1);
+            var ban2 = document.getElementById('song'+state.banpick2);
+            ban1.style.borderColor = 'gray';
+            ban2.style.borderColor = 'gray';
+            ban1.style.color = 'gray';
+            ban2.style.color = 'gray';
+            var codeban1 = document.getElementById('code'+state.banpick1);
+            var codeban2 = document.getElementById('code'+state.banpick2);
+            if(state.goon === '1') {
+                codeban1.innerHTML = map1[state.banpick1-1] + ' [BANNED]'
+                codeban2.innerHTML = map1[state.banpick2-1] + ' [BANNED]'
+            }
+            if(state.goon === '2') {
+                codeban1.innerHTML = map2[state.banpick1-1] + ' [BANNED]'
+                codeban2.innerHTML = map2[state.banpick2-1] + ' [BANNED]'
+            }
+            if(state.goon === '3') {
+                codeban1.innerHTML = map3[state.banpick1-1] + ' [BANNED]'
+                codeban2.innerHTML = map3[state.banpick2-1] + ' [BANNED]'
+            }
+
+            if(state.win1 !== '0') {
+                document.getElementById('song1').style.color = (state.win1==='1'?'red':'blue');
+                document.getElementById('song1').style.borderColor = (state.win1==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code1').innerHTML = map1[0] + ' [PLAYER '+state.win1+']'
+                if(state.goon === '2') document.getElementById('code1').innerHTML = map2[0] + ' [PLAYER '+state.win1+']'
+                if(state.goon === '3') document.getElementById('code1').innerHTML = map3[0] + ' [PLAYER '+state.win1+']'
+            }
+            if(state.win2 !== '0') {
+                document.getElementById('song2').style.color = (state.win2==='1'?'red':'blue');
+                document.getElementById('song2').style.borderColor = (state.win2==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code2').innerHTML = map1[1] + ' [PLAYER '+state.win2+']'
+                if(state.goon === '2') document.getElementById('code2').innerHTML = map2[1] + ' [PLAYER '+state.win2+']'
+                if(state.goon === '3') document.getElementById('code2').innerHTML = map3[1] + ' [PLAYER '+state.win2+']'
+            }
+            if(state.win3 !== '0') {
+                document.getElementById('song3').style.color = (state.win3==='1'?'red':'blue');
+                document.getElementById('song3').style.borderColor = (state.win3==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code3').innerHTML = map1[2] + ' [PLAYER '+state.win3+']'
+                if(state.goon === '2') document.getElementById('code3').innerHTML = map2[2] + ' [PLAYER '+state.win3+']'
+                if(state.goon === '3') document.getElementById('code3').innerHTML = map3[2] + ' [PLAYER '+state.win3+']'
+            }
+            if(state.win4 !== '0') {
+                document.getElementById('song4').style.color = (state.win4==='1'?'red':'blue');
+                document.getElementById('song4').style.borderColor = (state.win4==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code4').innerHTML = map1[3] + ' [PLAYER '+state.win4+']'
+                if(state.goon === '2') document.getElementById('code4').innerHTML = map2[3] + ' [PLAYER '+state.win4+']'
+                if(state.goon === '3') document.getElementById('code4').innerHTML = map3[3] + ' [PLAYER '+state.win4+']'
+            }
+            if(state.win5 !== '0') {
+                document.getElementById('song5').style.color = (state.win5==='1'?'red':'blue');
+                document.getElementById('song5').style.borderColor = (state.win5==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code5').innerHTML = map1[4] + ' [PLAYER '+state.win5+']'
+                if(state.goon === '2') document.getElementById('code5').innerHTML = map2[4] + ' [PLAYER '+state.win5+']'
+                if(state.goon === '3') document.getElementById('code5').innerHTML = map3[4] + ' [PLAYER '+state.win5+']'
+            }
+            if(state.win6 !== '0') {
+                document.getElementById('song6').style.color = (state.win6==='1'?'red':'blue');
+                document.getElementById('song6').style.borderColor = (state.win6==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code6').innerHTML = map1[5] + ' [PLAYER '+state.win6+']'
+                if(state.goon === '2') document.getElementById('code6').innerHTML = map2[5] + ' [PLAYER '+state.win6+']'
+                if(state.goon === '3') document.getElementById('code6').innerHTML = map3[5] + ' [PLAYER '+state.win6+']'
+            }
+            if(state.win7 !== '0') {
+                document.getElementById('song7').style.color = (state.win7==='1'?'red':'blue');
+                document.getElementById('song7').style.borderColor = (state.win7==='1'?'red':'blue');
+                if(state.goon === '1') document.getElementById('code7').innerHTML = map1[6] + ' [PLAYER '+state.win7+']'
+                if(state.goon === '2') document.getElementById('code7').innerHTML = map2[6] + ' [PLAYER '+state.win7+']'
+                if(state.goon === '3') document.getElementById('code7').innerHTML = map3[6] + ' [PLAYER '+state.win7+']'
+            }
+        }
+    }
+</script>
+</body>
+</html>

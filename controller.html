@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KBL2 Controller</title>
+</head>
+<body>
+
+<button type="button" onclick="showsongs();">곡 목록 갱신 (군 번호 입력 후 클릭)</button>
+<p id="songlists"></p>
+
+<form onsubmit="updateSongs(); return false;">
+    <p>
+        군 <input type="text" id="goon"><br>
+        강 <input type="text" id="gang"><br>
+        조 <input type="text" id="joe"><br>
+    </p>
+    <p>
+        밴 픽 곡 번호 입력 (맵풀 순서대로 1~7번)
+        <input type="number" min="1" max="7" id="ban1">
+        <input type="number" min="1" max="7" id="ban2">
+    </p>
+    <p>
+        1번 곡 승자 <input type="number" min="0" max="2" id="win1" value="0"><br>
+        2번 곡 승자 <input type="number" min="0" max="2" id="win2" value="0"><br>
+        3번 곡 승자 <input type="number" min="0" max="2" id="win3" value="0"><br>
+        4번 곡 승자 <input type="number" min="0" max="2" id="win4" value="0"><br>
+        5번 곡 승자 <input type="number" min="0" max="2" id="win5" value="0"><br>
+        6번 곡 승자 <input type="number" min="0" max="2" id="win6" value="0"><br>
+        7번 곡 승자 <input type="number" min="0" max="2" id="win7" value="0"><br>
+    </p>
+
+    <button type="submit">Update Song Data</button>
+</form>
+
+<script>
+    var map1 = ['23354', '1e2e8', '20157', '184c3', '11208', 'ce66', '9064'];
+    var map2 = ['22dd9', '12377', '1d0df', 'dae6', '15d15', '1d865', '1d3e3'];
+    var map3 = ['d771', '1b891', '1fe6d', '16abf', '1d62f', '1c91c', '1acb3'];
+    var sock = new WebSocket("ws://127.0.0.1:2589");
+    sock.onopen = function(event) {
+        setTimeout(function() {
+            sock.send("Ping!");
+        }, 1000)
+    };
+    sock.onmessage = function(event) {
+        console.log(event.data);
+    }
+
+    function showsongs() {
+        var sls = document.getElementById("songlists");
+        var goon = document.getElementById("goon").value;
+        if (goon == '1') sls.innerHTML = map1.toString();
+        if (goon == '2') sls.innerHTML = map2.toString();
+        if (goon == '3') sls.innerHTML = map3.toString();
+    }
+
+    function updateSongs() {
+        var songinfos = {
+            "goon": document.getElementById("goon").value,
+            "gang": document.getElementById("gang").value,
+            "joe": document.getElementById("joe").value,
+            "banpick1": document.getElementById("ban1").value,
+            "banpick2": document.getElementById("ban2").value,
+            "win1": document.getElementById("win1").value,
+            "win2": document.getElementById("win2").value,
+            "win3": document.getElementById("win3").value,
+            "win4": document.getElementById("win4").value,
+            "win5": document.getElementById("win5").value,
+            "win6": document.getElementById("win6").value,
+            "win7": document.getElementById("win7").value,
+        }
+        sock.send(JSON.stringify(songinfos));
+    }
+</script>
+</body>
+</html>

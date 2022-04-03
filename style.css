@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap');
+
+#container {
+    width: 1280px;
+    height: 720px;
+    margin: 0;
+    background-image: url('./assets/img/bg.png');
+}
+
+body {
+    font-family: 'Nanum Gothic', serif;
+}
+
+#title {
+    text-align: center;
+}
+
+#bsck {
+    color: white;
+    font-size: 25px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+#gametitle {
+    margin: 0;
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+#settitle {
+    margin: 0;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#songlist {
+    border: 1px solid black;
+    margin: 30px auto;
+    width: 85%;
+    height: 70%;
+    background-color: rgba(130,225,145,0.8);
+}
+
+.lines {
+    margin: auto auto;
+    height: 33.333%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.songs {
+    border: 3px solid black;
+    display: inline-block;
+    width: 250px;
+    height: 100px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px 30px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-shadow: -1.5px 0 white, 0 1.5px white, 1.5px 0 white, 0 -1.5px white;
+}
+
+.code {
+    line-height: 20px;
+    font-size: 20px;
+}
+
+.title {
+    line-height: 60px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.mapper {
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
