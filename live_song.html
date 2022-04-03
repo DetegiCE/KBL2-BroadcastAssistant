@@ -68,6 +68,10 @@
     var title3 = ['LIKEY', 'Goodbye Declaration', 'Salamandar',
     'The Nights', 'Shaku (2012)', 'Redo', 'Punish']
 
+    var mapper1 = ['Soba`s & zeon-gitien', `Jabob`, `Joshabi`, `Jaack`, 'Soba`s', 'SieR', 'ETAN']
+    var mapper2 = ['Milk', 'ETAN', 'SmokeyBacon', 'SimplyMarvellous', 'Bytrius', 'Ani vs Salami', 'Joshabi']
+    var mapper3 = ['SimplyMarvellous', 'TOFU', 'Fefy', 'Nolanimations', 'SmokeyBacon', 'Joshabi & Bytrius', 'Timbo']
+
     var goon = document.getElementById("Goon");
     var gang = document.getElementById("Gang");
     var joe = document.getElementById("Joe");
@@ -108,6 +112,13 @@
                 if (state.goon === '1') esong.innerHTML = title1[i - 1];
                 if (state.goon === '2') esong.innerHTML = title2[i - 1];
                 if (state.goon === '3') esong.innerHTML = title3[i - 1];
+            }
+
+            for(var i=1 ; i<=7 ; i++) {
+                var esong = document.getElementById('mapper' + i);
+                if (state.goon === '1') esong.innerHTML = 'by ' + mapper1[i - 1];
+                if (state.goon === '2') esong.innerHTML = 'by ' + mapper2[i - 1];
+                if (state.goon === '3') esong.innerHTML = 'by ' + mapper3[i - 1];
             }
 
             var ban1 = document.getElementById('song'+state.banpick1);
